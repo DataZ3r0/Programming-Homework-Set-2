@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class Program
+{
+    public static void main(String[] args) 
+    {
+		Scanner scanner = new Scanner(System.in);
+        double NumbCap = scanner.nextDouble();
+        double h = 0;
+        for(double n = 1; n <= NumbCap;n++)
+        {
+            if(CheckForPrime(n) == false)
+            {
+                System.out.println(n);
+            }
+            else
+            {
+                System.out.println(n + " !PRIME ALERT!");
+            }
+        }
+        
+	}
+
+    static boolean CheckForPrime(double t)  //Check if prime by dividing t by all numbers from 2 to itself
+    {
+        int f = 0;
+        for(double i = 2;i<t;i++)
+        {
+            if(t%i == 0)
+            {
+                f++;
+            }
+        }
+        if(f > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+}
