@@ -1,0 +1,133 @@
+import java.util.Scanner;
+
+public class Program
+{
+    public static void main(String[] args) 
+    {
+        System.out.println("Enter a starting time(1-12)");
+        System.out.println("Enter a period(am or pm)");
+        System.out.println("Enter amount of hours to pass(1-24)");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        
+        Scanner scanner = new Scanner(System.in);
+        String startingHour = scanner.next();
+        int startingHourInt = 0;
+        String period = scanner.next();
+        String timeElapsed = scanner.next();
+        int timeElapsedInt = 0;
+        String[] validHours = {"1","2","3","4","5","6","7","8","9","10","11","12","Death"};
+        int[] validHoursInt = {1,2,3,4,5,6,7,8,9,10,11,12};
+        String[] validElapseTimes = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "Death"};
+        int[] validElapseTimesInt = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
+        boolean validStart = false;
+        boolean validPeriod = false;
+        boolean validElapse = false;
+        boolean periodBool = false; //true = am false = pm
+        
+
+        for(int i = 0; i<13; i++) //checks if starting time is valid by comparing it with an array of valid inputs
+        {
+            if(validHours[i].equals(startingHour))
+            {
+                System.out.println("Starting Time:" + startingHour);
+                startingHourInt += validHoursInt[i];
+                validStart = true;
+                break;
+            }
+        }
+        
+        if(validStart==false)
+        {
+            System.out.println("Starting Time: Invalid (" + startingHour + ")");
+        }
+
+//-----------------------------------------------------------------------------------------------------------------------
+
+        if(period.equalsIgnoreCase("am"))//checks if am or pm was inputted and makes sure its valid
+        {
+            System.out.println("Period:" + period);
+            periodBool = true;
+            validPeriod = true;
+        }
+        else if(period.equalsIgnoreCase("pm"))
+        {
+            System.out.println("Period:" + period);
+            validPeriod = true;
+        }
+        else
+        {
+            validPeriod = false;
+        }
+
+        if(validPeriod==false) //fail safe for period
+        {
+            System.out.println("Period: Invalid (" + period + ")");
+        }
+
+//----------------------------------------------------------------------------------------------------
+
+        for(int x = 0; x<25; x++)
+        {
+            if(validElapseTimes[x].equals(timeElapsed))
+            {
+                System.out.println("Time Elapsed:" + timeElapsed);
+                timeElapsedInt += validElapseTimesInt[x];
+                validElapse = true;
+                break;
+            }
+        }
+
+        if(validElapse==false)
+        {
+            System.out.println("Time Elapse: Invalid (" + timeElapsed + ")");
+        }
+
+//---------------------------------------------------------------------------------------------------------------
+
+        if(validStart==true&&validPeriod==true&&validElapse==true)
+        {
+            elapseHours(startingHourInt, periodBool, timeElapsedInt);
+        }
+        else
+        {
+            fail(); //if one aspect is invalid, a new time won't come up and it will say failure instead
+        }
+    }
+
+    static void elapseHours(int s, boolean p, int e)
+    {
+        s += e;
+        
+        if(s>12)
+        {
+            do //for every 12 hours elapsed it will switch between am and pm
+            {
+                s -= 12;
+                if(p)
+                {
+                    p = false;
+                }
+                else
+                {
+                    p = true;
+                }
+            }while(s>12);
+        }
+        
+        if(p)
+        {
+            System.out.println("New Time:" + s + "am");
+        }
+        else
+        {
+            System.out.println("New Time:" + s + "pm");
+        }
+    }
+
+    static void fail()
+    {
+        System.out.println("Failure!");
+    }
+}
